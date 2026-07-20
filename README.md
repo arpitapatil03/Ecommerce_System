@@ -1,13 +1,19 @@
 🛒 GreatKart - E-commerce Website
 
 
+
 	About the Project-
+
 
 
 GreatKart is a full-featured E-commerce web application developed using Django. It enables users to explore products, browse categories, search for products, manage their shopping cart, and place orders through a dummy payment system. The application also includes user authentication, password recovery, product reviews & ratings, and an admin dashboard for efficient store management.
 
 
+
+
 	Features-
+
+
 
 • User Registration
 
@@ -45,7 +51,10 @@ GreatKart is a full-featured E-commerce web application developed using Django. 
 
 
 
+
 🛠️ Technologies Used-
+
+
 
 • Python
 
