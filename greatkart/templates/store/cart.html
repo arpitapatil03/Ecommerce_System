@@ -1,0 +1,609 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+/* ================= CART PAGE ================= */
+
+.cart-section{
+
+    background:linear-gradient(
+        135deg,
+        #e6d4e0,
+        #fdeef8
+    );
+
+    min-height:100vh;
+    padding:40px 0;
+
+}
+
+
+.container{
+
+    max-width:1200px;
+
+}
+
+
+
+/* Card */
+
+.card{
+
+    border:none;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    background:white;
+    overflow:hidden;
+
+}
+
+
+
+/* Empty Cart */
+
+.empty-cart h2{
+
+    color:#0a090a;
+    font-weight:700;
+
+}
+
+
+
+/* Table */
+
+.table-shopping-cart{
+
+    margin-bottom:0;
+    font-size:14px;
+
+}
+
+
+.table-shopping-cart thead{
+
+    background:#f3e8ff;
+
+}
+
+
+.table-shopping-cart th{
+
+    color:#080708;
+    font-size:13px;
+
+}
+
+
+.table-shopping-cart td{
+
+    vertical-align:middle;
+
+}
+
+
+
+/* Product */
+
+.img-sm{
+
+    width:75px;
+    height:75px;
+    object-fit:cover;
+    border-radius:12px;
+
+}
+
+
+
+.title{
+
+    font-size:15px;
+    font-weight:600;
+    color:#333;
+
+}
+
+
+.title:hover{
+
+    color:#17141a !important;
+
+}
+
+
+/* Quantity */
+
+.input-spinner{
+
+    width:120px;
+
+}
+
+
+.input-spinner .btn{
+
+    border-radius:8px;
+    border:1px solid #ddd;
+
+}
+
+
+.input-spinner .form-control{
+
+    text-align:center;
+    border:1px solid #ddd;
+
+}
+
+
+
+/* Price */
+
+.price{
+
+    color:#0a090c;
+    font-size:16px;
+    font-weight:700;
+
+}
+
+
+
+/* Remove */
+
+.btn-danger{
+
+    border-radius:10px;
+    font-size:13px;
+
+}
+
+
+
+/* Summary */
+
+.dlist-align{
+
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+
+}
+
+
+.dlist-align dt{
+
+    color:#555;
+    font-weight:600;
+
+}
+
+
+.dlist-align dd{
+
+    font-weight:700;
+
+}
+
+
+
+/* Buttons */
+
+
+.btn-primary{
+
+    background:linear-gradient(
+        135deg,
+        #5f4d58,
+        #554d5e
+    );
+
+    border:none;
+    border-radius:10px;
+    font-weight:700;
+
+}
+
+
+.btn-primary:hover{
+
+    background:#c9afc9;
+
+}
+
+
+
+.btn-light{
+
+    border-radius:10px;
+    font-weight:600;
+
+}
+
+
+</style>
+
+
+
+<section class="cart-section">
+
+<div class="container">
+
+
+{% if not cart_items %}
+
+
+<div class="empty-cart text-center">
+
+<h2>Your Shopping Cart is Empty</h2>
+
+<br>
+
+<a href="{% url 'store' %}" 
+class="btn btn-primary">
+
+Continue Shopping
+
+</a>
+
+</div>
+
+
+
+{% else %}
+
+
+
+<div class="row">
+
+
+<!-- ================= CART ITEMS ================= -->
+
+<aside class="col-lg-9">
+
+
+<div class="card">
+
+
+<table class="table table-borderless table-shopping-cart">
+
+
+<thead class="text-muted">
+
+<tr class="small text-uppercase">
+
+<th>Product</th>
+
+<th width="120">
+Quantity
+</th>
+
+<th width="120">
+Price
+</th>
+
+<th width="150"></th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for cart_item in cart_items %}
+
+
+
+<tr>
+
+
+<td>
+
+
+<figure class="itemside align-items-center">
+
+
+<div class="aside">
+
+<img src="{{ cart_item.product.images.url }}"
+class="img-sm">
+
+</div>
+
+
+
+<figcaption class="info ml-3">
+
+
+<a href="{{ cart_item.product.get_url }}"
+class="title">
+
+{{ cart_item.product.product_name }}
+
+</a>
+
+
+
+<p class="text-muted small">
+
+
+{% if cart_item.variations.all %}
+
+
+{% for item in cart_item.variations.all %}
+
+{{ item.variation_category|capfirst }} :
+
+{{ item.variation_value|capfirst }}
+
+<br>
+
+{% endfor %}
+
+
+{% endif %}
+
+
+</p>
+
+
+
+</figcaption>
+
+
+</figure>
+
+
+</td>
+
+
+
+
+
+<td>
+
+
+<div class="input-group input-spinner">
+
+
+<div class="input-group-prepend">
+
+
+<a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}"
+
+class="btn btn-light">
+
+<i class="fa fa-minus"></i>
+
+</a>
+
+
+</div>
+
+
+
+<input type="text"
+
+class="form-control"
+
+value="{{ cart_item.quantity }}"
+
+readonly>
+
+
+
+<div class="input-group-append">
+
+
+<a href="{% url 'add_cart' cart_item.product.id %}?cart_item_id={{ cart_item.id }}"
+
+class="btn btn-light">
+
+<i class="fa fa-plus"></i>
+
+</a>
+
+
+</div>
+
+
+
+</div>
+
+
+</td>
+
+
+
+
+
+<td>
+
+
+<div class="price-wrap">
+
+
+<var class="price">
+
+${{ cart_item.sub_total }}
+
+</var>
+
+
+<br>
+
+
+<small class="text-muted">
+
+${{ cart_item.product.price }}
+
+</small>
+
+
+</div>
+
+
+</td>
+
+
+
+
+
+
+<td class="text-right">
+
+
+<a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}"
+
+class="btn btn-danger">
+
+Remove
+
+</a>
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+</aside>
+
+
+
+
+
+<!-- ================= SUMMARY ================= -->
+
+
+<aside class="col-lg-3">
+
+
+<div class="card">
+
+
+<div class="card-body">
+
+
+<dl class="dlist-align">
+
+<dt>Total Price:</dt>
+
+<dd>${{total}}</dd>
+
+</dl>
+
+
+
+<dl class="dlist-align">
+
+<dt>Tax:</dt>
+
+<dd>${{tax}}</dd>
+
+</dl>
+
+
+
+
+<dl class="dlist-align">
+
+<dt>Grand Total:</dt>
+
+<dd>
+
+<strong>
+
+${{grand_total}}
+
+</strong>
+
+</dd>
+
+</dl>
+
+
+
+<hr>
+
+
+
+<p class="text-center">
+
+<img src="{% static 'images/misc/payments.png' %}"
+
+height="26">
+
+</p>
+
+
+
+<a href="{% url 'checkout' %}"
+
+class="btn btn-primary btn-block">
+
+Checkout
+
+</a>
+
+
+
+
+<a href="{% url 'store' %}"
+
+class="btn btn-light btn-block mt-2">
+
+Continue Shopping
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+</aside>
+
+
+
+</div>
+
+
+
+{% endif %}
+
+
+
+</div>
+
+</section>
+
+
+{% endblock %}

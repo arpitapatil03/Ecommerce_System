@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.section-content{
+    background: linear-gradient(135deg,#eeb9c6,#9ebfeb);
+    min-height:100vh;
+    padding:60px 0;
+}
+
+.register-card{
+    max-width:550px;
+    margin:auto;
+    border:none;
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+.register-card .card-body{
+    padding:35px;
+}
+
+.card-title{
+    font-weight:700;
+    color:#74476b;
+}
+
+.form-control{
+    border-radius:10px;
+    height:48px;
+}
+
+.form-control:focus{
+    box-shadow:0 0 8px rgba(187, 108, 183, 0.25);
+    border-color:#ebd1e1;
+}
+
+.btn-register{
+    background:#8a5a82;
+    border-color:#8a5a82;
+    color:#fff;
+    border-radius:10px;
+    height:48px;
+    font-weight:600;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.btn-register:hover{
+    background:#74466d;
+    border-color:#74466d;
+    color:#fff;
+}
+
+.login-link a{
+    color:#292728;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+
+
+
+
+</style>
+
+<section class="section-content">
+
+<div class="container">
+
+<div class="card register-card">
+    <article class="card-body">
+
+        {% include 'includes/alerts.html' %}
+
+        <div class="text-center mb-4">
+            <h3 class="card-title">Create Your Account</h3>
+            
+        </div>
+
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <div class="col form-group">
+                    <label>First Name</label>
+                    {{ form.first_name }}
+                </div>
+
+                <div class="col form-group">
+                    <label>Last Name</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Email Address</label>
+                    {{ form.email }}
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Phone Number</label>
+                    {{ form.phone_number }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Create Password</label>
+                    {{ form.password }}
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Confirm Password</label>
+                    {{ form.confirm_password }}
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <button type="submit" class="btn btn-primary btn-block btn-register">
+                    Register
+                </button>
+            </div>
+
+            <div class="text-danger">
+                {{ form.email.errors }}
+                {{ form.non_field_errors }}
+            </div>
+
+        </form>
+
+    </article>
+</div>
+
+<p class="text-center mt-4 login-link">
+    Already have an account?
+    <a href="{% url 'login' %}">Login</a>
+</p>
+
+</div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,641 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<style>
+
+/* ================= CHECKOUT PAGE ================= */
+
+.checkout-section{
+
+    background:linear-gradient(135deg,#f8f9ff,#eef7ff);
+    min-height:100vh;
+    padding:40px 0;
+
+}
+
+
+.checkout-container{
+
+    max-width:1100px;
+    margin:auto;
+
+}
+
+
+/* Card */
+
+.checkout-card{
+
+    border:none;
+    border-radius:15px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    background:white;
+
+}
+
+
+.checkout-card .card-body{
+
+    padding:22px;
+
+}
+
+
+/* Heading Center */
+
+.card-title{
+
+    font-size:20px;
+    font-weight:700;
+    color:#241431;
+    margin-bottom:18px;
+    text-align:center;
+
+}
+
+
+
+/* Label */
+
+label{
+
+    font-size:14px;
+    font-weight:600;
+    color:#444;
+
+}
+
+
+/* Input */
+
+.form-control{
+
+    height:38px;
+    border-radius:8px;
+    border:1px solid #ddd;
+    font-size:14px;
+
+}
+
+
+.form-control:focus{
+
+    border-color:#2f1644;
+    box-shadow:0 0 6px rgba(80, 34, 117, 0.25);
+
+}
+
+
+/* Textarea */
+
+textarea.form-control{
+
+    height:75px;
+
+}
+
+
+/* Table */
+
+.order-table{
+
+    font-size:14px;
+
+}
+
+
+.order-table thead{
+
+    background:#f3e8ff;
+
+}
+
+
+.order-table th{
+
+    color:#6a1b9a;
+    font-size:13px;
+
+}
+
+
+.order-table td{
+
+    vertical-align:middle;
+
+}
+
+
+
+/* Product Image */
+
+.product-img{
+
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:10px;
+
+}
+
+
+/* Product Name */
+
+.product-name{
+
+    font-size:14px;
+    font-weight:600;
+    color:#0f0d0d;
+    text-decoration:none;
+
+}
+
+
+.product-name:hover{
+
+    color:#020202;
+
+}
+
+
+
+/* Price */
+
+.price{
+
+    color:#050505;
+    font-size:15px;
+    font-weight:700;
+
+}
+
+
+.checkout-section{
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(123,44,191,0.15),
+        rgba(90,24,154,0.15)
+    ),
+    linear-gradient(
+        135deg,
+        #d8f89c,
+        #b3e7df
+    );
+
+    min-height:100vh;
+    padding:40px 0;
+
+}
+
+
+/* Button */
+
+.place-btn{
+
+    height:42px;
+    border-radius:10px;
+    border:none;
+
+    background:linear-gradient(135deg,#512970,#683b96);
+
+    color:white;
+    font-size:15px;
+    font-weight:700;
+
+}
+
+
+.shop-btn{
+
+    height:38px;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+
+}
+
+
+</style>
+
+
+
+<section class="checkout-section">
+
+
+<div class="container checkout-container">
+
+
+<form action="{% url 'place_order' %}" method="POST">
+ 
+{% csrf_token %}
+
+
+<div class="row">
+
+
+
+<!-- BILLING ADDRESS -->
+
+
+<div class="col-lg-7 mb-4">
+
+
+<div class="card checkout-card">
+
+
+<div class="card-body">
+
+
+<h4 class="card-title">
+
+<i class="fa fa-map-marker"></i>
+Billing Address
+
+</h4>
+
+
+
+<div class="form-row">
+
+
+<div class="col form-group">
+
+<label>First Name</label>
+
+<input type="text"
+name="first_name"
+class="form-control"
+required>
+
+</div>
+
+
+
+<div class="col form-group">
+
+<label>Last Name</label>
+
+<input type="text"
+name="last_name"
+class="form-control"
+required>
+
+</div>
+
+
+</div>
+
+
+
+<div class="form-row">
+
+
+<div class="col form-group">
+
+<label>Email</label>
+
+<input type="email"
+name="email"
+class="form-control"
+required>
+
+</div>
+
+
+<div class="col form-group">
+
+<label>Phone Number</label>
+
+<input type="text"
+name="phone"
+class="form-control"
+required>
+
+</div>
+
+
+</div>
+
+
+
+<div class="form-row">
+
+
+<div class="col form-group">
+
+<label>Address Line 1</label>
+
+<input type="text"
+name="address_line_1"
+class="form-control"
+required>
+
+</div>
+
+
+
+<div class="col form-group">
+
+<label>Address Line 2</label>
+
+<input type="text"
+name="address_line_2"
+class="form-control">
+
+</div>
+
+
+</div>
+<!-- CITY STATE COUNTRY -->
+
+<div class="form-row">
+
+
+<div class="col form-group">
+
+<label>City</label>
+
+<input type="text"
+name="city"
+class="form-control"
+required>
+
+</div>
+
+
+
+<div class="col form-group">
+
+<label>State</label>
+
+<input type="text"
+name="state"
+class="form-control"
+required>
+
+</div>
+
+
+
+<div class="col form-group">
+
+<label>Country</label>
+
+<input type="text"
+name="country"
+class="form-control"
+required>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="form-group">
+
+<label>Order Note</label>
+
+<textarea name="order_note"
+class="form-control"
+placeholder="Write your order note..."></textarea>
+
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+<!-- ================= YOUR ORDER ================= -->
+
+
+<div class="col-lg-5">
+
+
+<div class="card checkout-card">
+
+
+<div class="card-body">
+
+
+<h4 class="card-title">
+
+<i class="fa fa-shopping-cart"></i>
+Your Order
+
+</h4>
+
+
+
+
+
+<table class="table order-table">
+
+
+<thead>
+
+<tr>
+
+<th>Product</th>
+
+<th class="text-center">
+Qty
+</th>
+
+<th class="text-right">
+Price
+</th>
+
+</tr>
+
+</thead>
+
+
+
+
+<tbody>
+
+
+{% for cart_item in cart_items %}
+
+
+
+<tr>
+
+
+<td>
+
+
+<div class="d-flex align-items-center">
+
+
+<img src="{{ cart_item.product.images.url }}"
+class="product-img">
+
+
+
+<div class="ml-2">
+
+
+<a href="{{ cart_item.product.get_url }}"
+class="product-name">
+
+{{ cart_item.product.product_name }}
+
+</a>
+
+
+
+
+{% if cart_item.variations.all %}
+
+
+<p class="text-muted small mb-0">
+
+
+{% for item in cart_item.variations.all %}
+
+
+{{ item.variation_category|capfirst }} :
+
+{{ item.variation_value|capfirst }}
+
+
+<br>
+
+
+{% endfor %}
+
+
+</p>
+
+
+{% endif %}
+
+
+
+</div>
+
+
+</div>
+
+
+</td>
+
+
+
+
+<td class="text-center">
+
+{{ cart_item.quantity }}
+
+</td>
+
+
+
+
+<td class="text-right">
+
+
+<span class="price">
+
+${{ cart_item.sub_total }}
+
+</span>
+
+
+<br>
+
+
+<small class="text-muted">
+
+${{ cart_item.product.price }}
+
+</small>
+
+
+</td>
+
+
+
+</tr>
+
+
+
+{% endfor %}
+
+
+
+</tbody>
+
+
+</table>
+
+
+
+
+
+<button type="submit"
+name="submit"
+class="btn place-btn btn-block">
+
+
+<i class="fa fa-shopping-cart"></i>
+
+Place Order
+
+
+</button>
+
+
+
+
+
+<a href="{% url 'store' %}"
+class="btn btn-light btn-block shop-btn mt-2">
+
+
+Continue Shopping
+
+
+</a>
+
+
+
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</form>
+
+
+</div>
+
+
+</section>
+
+
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.section-content{
+    background:linear-gradient(135deg,#d8ebf3,#f7cfdb);
+    min-height:100vh;
+    padding:60px 0;
+}
+
+.login-card{
+    max-width:500px;
+    margin:auto;
+    border:none;
+    border-radius:18px;
+    box-shadow:0 12px 30px rgba(0,0,0,.12);
+}
+
+.login-card .card-body{
+    padding:35px;
+}
+
+.card-title{
+    font-weight:700;
+    color:#74476b;
+}
+
+.form-control{
+    border-radius:10px;
+    height:48px;
+}
+
+.form-control:focus{
+    box-shadow:0 0 8px rgba(187,108,183,.25);
+    border-color:#ebd1e1;
+}
+
+.btn-login{
+    background:#8a5a82;
+    border-color:#6e3b66;
+    color:#fff;
+    border-radius:10px;
+    height:48px;
+    font-weight:600;
+    font-size:16px;
+    transition:.3s;
+}
+
+.btn-login:hover{
+    background:#74466d;
+    border-color:#74466d;
+    color:#fff;
+}
+
+.login-link a,
+.forgot-link a{
+    color:#292728;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.login-link a:hover,
+.forgot-link a:hover{
+    text-decoration:underline;
+}
+
+.verify-box{
+    max-width:700px;
+    margin:auto;
+    border-radius:15px;
+}
+</style>
+
+<section class="section-content">
+
+<div class="container">
+
+{% if request.GET.command == 'verification' %}
+
+<div class="alert alert-info verify-box text-center p-4 shadow">
+    <h4>Email Verification</h4>
+    <p class="mb-3">
+        Thank you for registering with us.
+        We have sent a verification email to
+        <strong>{{ request.GET.email }}</strong>.
+    </p>
+
+    Already verified?
+    <a href="{% url 'login' %}" class="fw-bold">
+        Login Here
+    </a>
+</div>
+
+{% else %}
+
+<div class="card login-card">
+
+    <article class="card-body">
+
+        {% include 'includes/alerts.html' %}
+
+        <div class="text-center mb-4">
+            <h3 class="card-title">Sign in</h3>
+        </div>
+
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Enter Email"
+                    name="email"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    placeholder="Enter Password"
+                    name="password"
+                    required>
+            </div>
+
+            <div class="text-right mb-3 forgot-link">
+                <a href="{% url 'forgotPassword' %}">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-login">
+                Login
+            </button>
+
+        </form>
+
+    </article>
+
+</div>
+
+<p class="text-center mt-4 login-link">
+    Don't have an account?
+    <a href="{% url 'register' %}">
+        Register
+    </a>
+</p>
+
+{% endif %}
+
+</div>
+
+</section>
+
+{% endblock %}
